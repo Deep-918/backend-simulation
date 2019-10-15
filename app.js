@@ -40,10 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 app.use('/customers', customerInfos);
-app.use('/customers', accountInfos);
-app.use('/customers', contactInfos);
-app.use('/customers', txnInfos);
-app.use(passport.session());
+app.use('/accounts', accountInfos);
+app.use('/contacts', contactInfos);
+app.use('/txns', txnInfos);
+//app.use(passport.session());
 
 app.set('views', path.join(__dirname, 'Views'));
 app.set('view engine', 'ejs');
