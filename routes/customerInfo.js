@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const Customer = require('../models/CUST_INFO');
+const request = require('request');
 
 // Register
 router.post('', (req,res,next) => {
@@ -22,6 +23,20 @@ router.post('', (req,res,next) => {
             res.json({success: false, msg: 'Failed to add customer'})
         }
         else{
+            request({
+                url:"http://localhost:8085/kafka/publish/customer",
+                method: "POST",
+                json: newCustomer,
+            }, function (error,response, body) {
+                if(!error && response.statusCode === 200){
+                    console.log(body)
+                }
+                else
+                {
+                    console.log("error: " + error);
+                    
+                }
+            })
             res.json({success: true, msg: 'customer added'});
         }
     })
